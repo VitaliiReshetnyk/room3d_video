@@ -58,14 +58,12 @@ https://github.com/colmap/colmap/releases
 
 After installation, verify that COLMAP is accessible:
 
-bash
-Копіювати код
+
 colmap -h
 If the help message is shown, COLMAP is correctly installed.
 
 Project Structure
-graphql
-Копіювати код
+
 room3d-video-reconstruction/
 ├── src/
 │   ├── main.py        # Entry point for reconstruction
@@ -78,8 +76,7 @@ room3d-video-reconstruction/
 └── LICENSE
 Usage
 Run reconstruction from video
-bash
-Копіювати код
+
 python src/main.py \
   --video path/to/room.mp4 \
   --fps 1.5 \
@@ -99,13 +96,10 @@ Visualization
 To visualize the generated point cloud or mesh, specify the file path directly inside
 viewer.py:
 
-python
-Копіювати код
 GEOMETRY_PATH = r"C:\path\to\exports\room_pointcloud.ply"
 Then run:
 
-bash
-Копіювати код
+
 python src/viewer.py
 An interactive Open3D window will open, allowing rotation, zooming, and inspection
 of the reconstructed scene.
@@ -135,8 +129,6 @@ https://github.com/colmap/colmap
 If you use this project for academic or research purposes, please cite the original
 COLMAP publications:
 
-bibtex
-Копіювати код
 @inproceedings{schoenberger2016sfm,
   author    = {Johannes L. Sch{\"o}nberger and Jan-Michael Frahm},
   title     = {Structure-from-Motion Revisited},
