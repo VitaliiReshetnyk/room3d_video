@@ -52,7 +52,7 @@ Install Python dependencies:
 pip install -r requirements.txt
 COLMAP Installation
 COLMAP must be installed independently of this repository.
-
+```
 For Windows with NVIDIA GPU, download the CUDA-enabled binary from the official releases page:
 https://github.com/colmap/colmap/releases
 
