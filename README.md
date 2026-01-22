@@ -128,7 +128,7 @@ https://github.com/colmap/colmap
 
 If you use this project for academic or research purposes, please cite the original
 COLMAP publications:
-
+```
 @inproceedings{schoenberger2016sfm,
   author    = {Johannes L. Sch{\"o}nberger and Jan-Michael Frahm},
   title     = {Structure-from-Motion Revisited},
@@ -142,3 +142,4 @@ COLMAP publications:
   booktitle = {European Conference on Computer Vision (ECCV)},
   year      = {2016}
 }
+```
