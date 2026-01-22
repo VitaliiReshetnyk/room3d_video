@@ -1,69 +1,75 @@
 # Video-to-3D Room Reconstruction from Monocular Video
 
-This repository contains a Python-based pipeline for reconstructing a 3D representation
-of an indoor environment from a monocular video (MP4).
+This repository provides a Python-based pipeline for reconstructing a 3D representation
+of an indoor environment from a monocular video (MP4).  
+The project automates the complete workflow from raw video frames to a dense 3D point cloud
+and a surface mesh.
 
-The project automates the full workflow from video frames to a dense 3D point cloud
-and surface mesh. It focuses on preprocessing, pipeline orchestration, visualization,
-and export of results, while relying on a proven external SfM/MVS engine.
+Rather than reimplementing Structure-from-Motion (SfM) and Multi-View Stereo (MVS) algorithms
+from scratch, this repository focuses on building a clean, reproducible, and extensible
+automation layer around a proven external reconstruction engine.
 
 ---
 
 ## Overview
 
 The goal of this project is to convert a handheld video of a room into a usable 3D
-representation suitable for visualization, inspection, or further processing.
+representation suitable for visualization, inspection, and further processing.
 
-The pipeline performs:
-- video frame extraction,
-- sparse Structure-from-Motion reconstruction (camera poses + sparse points),
-- dense Multi-View Stereo reconstruction,
-- depth map fusion into a dense point cloud,
-- surface mesh generation,
-- visualization and export to common 3D formats.
+The pipeline performs the following steps:
 
-This repository does not reimplement SfM or MVS algorithms from scratch. Instead, it
-provides a clean, reproducible, and extensible automation layer around an established
-reconstruction engine.
+1. Extract frames from an input video (MP4)
+2. Perform sparse Structure-from-Motion reconstruction (camera poses + sparse points)
+3. Run dense Multi-View Stereo reconstruction
+4. Fuse depth maps into a dense point cloud
+5. Generate a surface mesh
+6. Visualize and export results to common 3D formats
 
----
-
-## Pipeline Components
-
-- Video preprocessing and frame extraction: **:contentReference[oaicite:0]{index=0}**
-- Structure-from-Motion (SfM) and Multi-View Stereo (MVS): **:contentReference[oaicite:1]{index=1}**
-- Visualization and export of 3D data: **:contentReference[oaicite:2]{index=2}**
+This repository is intended for research, educational use, and rapid prototyping of
+video-based indoor 3D reconstruction pipelines.
 
 ---
 
-## Requirements
+## Technologies Used
 
-### System
+- **OpenCV** — video preprocessing and frame extraction  
+- **COLMAP** — Structure-from-Motion (SfM) and Multi-View Stereo (MVS) reconstruction  
+- **Open3D** — visualization and export of 3D data  
+
+COLMAP is used strictly as an external dependency and is not distributed with this repository.
+
+---
+
+## System Requirements
+
 - Windows 10 / 11 (64-bit)
-- NVIDIA GPU with CUDA support (recommended)
-- COLMAP installed separately and available in system PATH
-
-### Python
 - Python 3.9 or newer
-- Dependencies listed in `requirements.txt`
+- Separate installation of COLMAP (CUDA-enabled NVIDIA GPU strongly recommended)
 
-Install Python dependencies:
+---
+
+## Python Dependencies
+
+All required Python packages are listed in `requirements.txt`.
+
+Install them with:
+
 ```bash
 pip install -r requirements.txt
-COLMAP Installation
-COLMAP must be installed independently of this repository.
 ```
-For Windows with NVIDIA GPU, download the CUDA-enabled binary from the official releases page:
+
+## COLMAP Installation
+
+COLMAP must be installed independently and available in the system PATH.
+
+For Windows systems with NVIDIA GPUs, download the CUDA-enabled binary from the official
+COLMAP releases page:
+
 https://github.com/colmap/colmap/releases
 
-After installation, verify that COLMAP is accessible:
+## Project Structure
 
-
-colmap -h
-If the help message is shown, COLMAP is correctly installed.
-
-Project Structure
-
+```
 room3d-video-reconstruction/
 ├── src/
 │   ├── main.py        # Entry point for reconstruction
@@ -74,70 +80,59 @@ room3d-video-reconstruction/
 ├── requirements.txt
 ├── README.md
 └── LICENSE
-Usage
-Run reconstruction from video
+```
 
+## Usage
+
+Run reconstruction from video
+```
 python src/main.py \
   --video path/to/room.mp4 \
   --fps 1.5 \
   --max_frames 500 \
   --work work \
   --export_dir exports
-Output files
-After successful execution, the following files are produced:
+```
 
-room_pointcloud.ply — dense point cloud
+## Output Files
 
-room.obj — surface mesh
+After successful execution, the following files are generated:
+-room_pointcloud.ply — dense point cloud
+-room.obj — surface mesh
+-room.glb — mesh in GLB format
 
-room.glb — mesh in GLB format
+## Notes and Limitations
 
-Visualization
-To visualize the generated point cloud or mesh, specify the file path directly inside
-viewer.py:
-
-GEOMETRY_PATH = r"C:\path\to\exports\room_pointcloud.ply"
-Then run:
-
-
-python src/viewer.py
-An interactive Open3D window will open, allowing rotation, zooming, and inspection
-of the reconstructed scene.
-
-Notes and Limitations
 Reconstruction quality strongly depends on video quality and camera motion.
-
 Slow camera movement with large frame overlap is recommended.
-
 Motion blur, poor lighting, and textureless surfaces may reduce reconstruction quality.
+High-resolution videos (e.g. 4K) significantly increase processing time.
 
-High-resolution videos (e.g., 4K) significantly increase processing time.
+## License
 
-License
 The code in this repository is released under the MIT License.
+COLMAP is licensed separately under the BSD License and is distributed independently.
 
-COLMAP is licensed under the BSD License and is distributed separately.
+## Credits and Citation
 
-Credits and Citation
 This project uses COLMAP for Structure-from-Motion (SfM) and Multi-View Stereo (MVS)
 reconstruction.
 
 COLMAP is developed by Johannes L. Schönberger and collaborators.
-The official source code is available at:
-https://github.com/colmap/colmap
+Official source code: https://github.com/colmap/colmap
 
 If you use this project for academic or research purposes, please cite the original
 COLMAP publications:
-```
+```bibtex
 @inproceedings{schoenberger2016sfm,
-  author    = {Johannes L. Sch{\"o}nberger and Jan-Michael Frahm},
+  author    = {Johannes L. Schönberger and Jan-Michael Frahm},
   title     = {Structure-from-Motion Revisited},
   booktitle = {Conference on Computer Vision and Pattern Recognition (CVPR)},
   year      = {2016}
 }
 
 @inproceedings{schoenberger2016mvs,
-  author    = {Johannes L. Sch{\"o}nberger and Enliang Zheng and Marc Pollefeys and Jan-Michael Frahm},
+  author    = {Johannes L. Schönberger and Enliang Zheng and Marc Pollefeys and Jan-Michael Frahm},
   title     = {Pixelwise View Selection for Unstructured Multi-View Stereo},
   booktitle = {European Conference on Computer Vision (ECCV)},
   year      = {2016}
